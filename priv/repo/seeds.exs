@@ -11,14 +11,15 @@
 # and so on) as they will fail if something goes wrong.
 alias HappyTrucker.User
 
-managers = for i <- 1..5 do
-  %Channel{name: "manager_#{i}", token: "managers_token_#{i}", type: "manager"}
-end
+managers =
+  for i <- 1..5 do
+    %Channel{name: "manager_#{i}", token: "managers_token_#{i}", type: "manager"}
+  end
 
-drivers = for i <- 1..10 do
-  %Channel{name: "driver_#{i}", token: "drivers_token_#{i}", type: "driver"}
-end
-
+drivers =
+  for i <- 1..10 do
+    %Channel{name: "driver_#{i}", token: "drivers_token_#{i}", type: "driver"}
+  end
 
 Enum.each(managers ++ drivers, fn user ->
   HappyTrucker.Repo.insert(user)

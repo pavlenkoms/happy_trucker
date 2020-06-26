@@ -11,12 +11,11 @@ defmodule HappyTruckerWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug HappyTruckerWeb.Authenticate
   end
 
-  scope "/", HappyTruckerWeb do
-    pipe_through :browser
-
-    get "/", PageController, :index
+  scope "/api", HappyTruckerWeb.API do
+    pipe_through :api
   end
 
   # Other scopes may use custom stacks.
