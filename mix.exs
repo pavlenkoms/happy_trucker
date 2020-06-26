@@ -45,7 +45,8 @@ defmodule HappyTrucker.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:geocalc, "~> 0.8.1"}
+      {:geocalc, "~> 0.8.1"},
+      {:params, "~> 2.0"}
     ]
   end
 
