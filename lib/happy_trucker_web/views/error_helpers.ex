@@ -4,6 +4,7 @@ defmodule HappyTruckerWeb.ErrorHelpers do
   """
 
   use Phoenix.HTML
+  import Phoenix.Controller, only: [json: 2]
 
   @doc """
   Generates tag for inlined form input errors.
@@ -44,4 +45,18 @@ defmodule HappyTruckerWeb.ErrorHelpers do
       Gettext.dgettext(HappyTruckerWeb.Gettext, "errors", msg, opts)
     end
   end
+
+  def send_error(conn, type, error) do
+    err_code = Plug.Conn.Status.code(type)
+
+    conn
+    |> Plug.Conn.put_status(err_code)
+    |> json(%{
+      code: err_code,
+      error: message(error)
+    })
+  end
+
+  defp message(error) when is_binary(error), do: error
+  defp message(error), do: inspect(error)
 end
