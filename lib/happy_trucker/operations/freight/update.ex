@@ -5,7 +5,7 @@ defmodule HappyTrucker.Freight.Update do
   use Params,
     params: %{
       id!: :id,
-      freight: %{
+      freight!: %{
         status!: :string
       }
     }

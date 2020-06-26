@@ -3,7 +3,7 @@ defmodule HappyTrucker.Freight.Create do
 
   use Params,
     params: %{
-      freight: %{
+      freight!: %{
         lat!: :float,
         long!: :float
       }
