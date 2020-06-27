@@ -1,7 +1,8 @@
 defmodule HappyTrucker.Freight.GeoUtils do
   alias HappyTrucker.Freight
 
-  @spec distance(Freight.t, %{lat: float(), long: float()}) :: {:ok, integer()} | {:error, {atom(), String.t}}
+  @spec distance(Freight.t(), %{lat: float(), long: float()}) ::
+          {:ok, integer()} | {:error, {atom(), String.t()}}
   def distance(%Freight{} = freight, %{lat: lat, long: long} = _loc) do
     {:ok, Geocalc.distance_between([lat, long], [freight.start_lat, freight.start_long])}
   end

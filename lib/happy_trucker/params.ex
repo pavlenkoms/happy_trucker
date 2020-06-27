@@ -19,7 +19,11 @@ defmodule HappyTrucker.Params do
         end
       end
 
-      @spec subrun(map(), map()) :: :ok | {:ok, any()} | {:error, any()} | {:error, Ecto.Multi.name(), any(), %{required(Ecto.Multi.name()) => any()}}
+      @spec subrun(map(), map()) ::
+              :ok
+              | {:ok, any()}
+              | {:error, any()}
+              | {:error, Ecto.Multi.name(), any(), %{required(Ecto.Multi.name()) => any()}}
       def subrun(ctx, params) do
         with changeset = Module.concat(__MODULE__, Params).from(params),
              true <- changeset.valid? || {:error, {:invalid_params, changeset}},
