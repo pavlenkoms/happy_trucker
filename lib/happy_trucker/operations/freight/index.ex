@@ -18,6 +18,7 @@ defmodule HappyTrucker.Freight.Index do
       query
       |> Repo.all()
       |> sort_freights(location)
+
     {:ok, freights}
   end
 
@@ -35,6 +36,7 @@ defmodule HappyTrucker.Freight.Index do
         case Freight.GeoUtils.distance(f, location) do
           {:ok, distance} ->
             Map.put(f, :distance, distance)
+
           _ ->
             nil
         end

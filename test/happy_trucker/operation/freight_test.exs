@@ -6,6 +6,7 @@ defmodule HappyTrucker.Freight.CreateTest do
     setup do
       manager = insert(:user, type: "manager")
       driver = insert(:user, type: "driver")
+
       params = %{
         "freight" => %{
           "start_lat" => 1.0,
@@ -14,6 +15,7 @@ defmodule HappyTrucker.Freight.CreateTest do
           "finish_long" => 4.0
         }
       }
+
       %{
         manager: manager,
         driver: driver,
@@ -42,7 +44,7 @@ defmodule HappyTrucker.Freight.CreateTest do
     end
 
     test "create freight fail out of bounds", ctx do
-      params =  %{
+      params = %{
         "freight" => %{
           "start_lat" => 91,
           "start_long" => 181,
@@ -54,13 +56,13 @@ defmodule HappyTrucker.Freight.CreateTest do
       {:error, changeset} = Create.run(ctx.ctx, params)
 
       assert %{
-        start_lat: ["must be less than or equal to 90.0"],
-        finish_lat: ["must be less than or equal to 90.0"],
-        start_long: ["must be less than or equal to 180.0"],
-        finish_long: ["must be less than or equal to 180.0"]
-      } == errors_on(changeset)
+               start_lat: ["must be less than or equal to 90.0"],
+               finish_lat: ["must be less than or equal to 90.0"],
+               start_long: ["must be less than or equal to 180.0"],
+               finish_long: ["must be less than or equal to 180.0"]
+             } == errors_on(changeset)
 
-      params =  %{
+      params = %{
         "freight" => %{
           "start_lat" => -91,
           "start_long" => -181,
@@ -72,11 +74,11 @@ defmodule HappyTrucker.Freight.CreateTest do
       {:error, changeset} = Create.run(ctx.ctx, params)
 
       assert %{
-        start_lat: ["must be greater than or equal to -90.0"],
-        finish_lat: ["must be greater than or equal to -90.0"],
-        start_long: ["must be greater than or equal to -180.0"],
-        finish_long: ["must be greater than or equal to -180.0"]
-      } == errors_on(changeset)
+               start_lat: ["must be greater than or equal to -90.0"],
+               finish_lat: ["must be greater than or equal to -90.0"],
+               start_long: ["must be greater than or equal to -180.0"],
+               finish_long: ["must be greater than or equal to -180.0"]
+             } == errors_on(changeset)
     end
   end
 
@@ -85,12 +87,14 @@ defmodule HappyTrucker.Freight.CreateTest do
       manager = insert(:user, type: "manager")
       driver = insert(:user, type: "driver")
       freight = insert(:freight)
+
       params = %{
         "id" => freight.id,
         "freight" => %{
           "status" => "assigned"
         }
       }
+
       %{
         manager: manager,
         driver: driver,
@@ -126,6 +130,7 @@ defmodule HappyTrucker.Freight.CreateTest do
           "status" => "done"
         }
       }
+
       {:error, {:forbidden, "freight not belongs to user"}} = Update.run(ctx.ctx, params)
     end
 
@@ -189,7 +194,7 @@ defmodule HappyTrucker.Freight.CreateTest do
     test "get freight success with distance", ctx do
       {:ok, freight} = Get.run(ctx.ctx, %{"id" => ctx.freight_2.id, "lat" => 0.0, "long" => 0.0})
 
-      assert freight.distance == 314474.80510086863
+      assert freight.distance == 314_474.80510086863
       assert freight.id == ctx.freight_2.id
     end
 

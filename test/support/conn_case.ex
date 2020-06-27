@@ -25,7 +25,6 @@ defmodule HappyTruckerWeb.ConnCase do
       import HappyTruckerWeb.ConnCase
       import HappyTrucker.Factory
 
-
       alias HappyTruckerWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing

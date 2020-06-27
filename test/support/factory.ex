@@ -13,6 +13,7 @@ defmodule HappyTrucker.Factory do
 
   def user_factory do
     name = sequence(:user, &"user-#{&1}")
+
     %HappyTrucker.User{
       name: name,
       token: name,
