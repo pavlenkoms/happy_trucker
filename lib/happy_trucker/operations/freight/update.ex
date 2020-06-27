@@ -10,6 +10,7 @@ defmodule HappyTrucker.Freight.Update do
       }
     }
 
+  @spec call(map(), map()) :: {:ok, Freight.t()} | {:error, any()}
   def call(ctx, params) do
     Multi.new()
     |> Multi.run(:freight, fn _, changes -> do_freight(ctx, params, changes) end)

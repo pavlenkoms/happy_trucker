@@ -11,6 +11,7 @@ defmodule HappyTrucker.Freight.Create do
       }
     }
 
+  @spec call(map(), map()) :: {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   def call(_ctx, params) do
     freight = Map.put(params.freight, :status, "new")
     %Freight{} |> Freight.changeset(freight) |> Repo.insert()

@@ -9,6 +9,7 @@ defmodule HappyTrucker.Freight.Index do
       long: :float
     }
 
+  @spec call(map(), map()) :: {:ok, [Freight.t()]}
   def call(_ctx, params) do
     location = params[:lat] && params[:long] && params
 
