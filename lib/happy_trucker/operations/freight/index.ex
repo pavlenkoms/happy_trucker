@@ -5,38 +5,43 @@ defmodule HappyTrucker.Freight.Index do
 
   use Params,
     params: %{
-      location: %{
-        lat!: :float,
-        long!: :float
-      }
+      lat: :float,
+      long: :float
     }
 
   def call(_ctx, params) do
+    location = params[:lat] && params[:long] && params
+
     query = from f in Freight, where: f.status == "new"
 
     freights =
       query
       |> Repo.all()
-      |> sort_freights(params[:location])
-
+      |> sort_freights(location)
     {:ok, freights}
   end
 
   defp sort_freights([], _) do
-    {:ok, []}
+    []
   end
 
   defp sort_freights(freights, nil) do
-    {:ok, freights}
+    freights
   end
 
   defp sort_freights(freights, location) do
     freights =
       for f <- freights do
-        distance = Freight.GeoUtils.distance([location.lat, location.long], [f.lat, f.long])
-        Map.put(f, :distance, distance)
+        case Freight.GeoUtils.distance(f, location) do
+          {:ok, distance} ->
+            Map.put(f, :distance, distance)
+          _ ->
+            nil
+        end
       end
 
-    Enum.sort(freights, &(&1.distance >= &2.distance))
+    freights
+    |> Enum.reject(&is_nil/1)
+    |> Enum.sort(&(&1.distance <= &2.distance))
   end
 end

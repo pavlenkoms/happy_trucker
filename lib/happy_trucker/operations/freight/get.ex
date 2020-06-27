@@ -4,15 +4,15 @@ defmodule HappyTrucker.Freight.Get do
   use Params,
     params: %{
       id!: :id,
-      location: %{
-        lat!: :float,
-        long!: :float
-      }
+      lat: :float,
+      long: :float
     }
 
   def call(_ctx, params) do
+    location = params[:lat] && params[:long] && params
+
     with %Freight{} = freight <- Repo.get(Freight, params.id),
-         %Freight{} = freight <- calculate_distance(freight, params[:location]) do
+         %Freight{} = freight <- calculate_distance(freight, location) do
       {:ok, freight}
     else
       nil -> {:error, :not_found}
@@ -26,8 +26,8 @@ defmodule HappyTrucker.Freight.Get do
 
   defp calculate_distance(freight, location) do
     case Freight.GeoUtils.distance(freight, location) do
-      {:error, _} = err -> err
-      distance -> Map.put(freight, :distance, distance)
+      {:error, _} = _err -> freight
+      {:ok, distance} -> Map.put(freight, :distance, distance)
     end
   end
 end

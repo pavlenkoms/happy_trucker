@@ -12,7 +12,7 @@ defmodule HappyTrucker.Freight.Create do
     }
 
   def call(_ctx, params) do
-    params = Map.put(params, :status, "new")
-    %Freight{} |> Freight.changeset(params) |> Repo.insert()
+    freight = Map.put(params.freight, :status, "new")
+    %Freight{} |> Freight.changeset(freight) |> Repo.insert()
   end
 end

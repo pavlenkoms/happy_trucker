@@ -15,6 +15,14 @@ defmodule HappyTrucker.Freight.Update do
     |> Multi.run(:freight, fn _, changes -> do_freight(ctx, params, changes) end)
     |> Multi.run(:validate_freight, fn _, changes -> do_validate_freight(ctx, params, changes) end)
     |> Multi.run(:update, fn _, changes -> do_update(ctx, params, changes) end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{update: updated}} ->
+        {:ok, updated}
+
+      {:error, _op, err, _add} ->
+        {:error, err}
+    end
   end
 
   defp do_freight(_ctx, params, _changes) do
@@ -46,7 +54,7 @@ defmodule HappyTrucker.Freight.Update do
     if freight.driver_id == ctx.current_user.id do
       {:ok, nil}
     else
-      {:error, {:forbidden, "freight is not belonging to user!"}}
+      {:error, {:forbidden, "freight not belongs to user"}}
     end
   end
 

@@ -14,23 +14,23 @@ defmodule HappyTrucker.Freight do
     belongs_to(:driver, HappyTrucker.User)
   end
 
-  @fields ~w(start_lat start_long finish_lat finish_long status driver_id)
-  @required_fields ~w(start_lat start_long finish_lat finish_long status)
+  @fields ~w(start_lat start_long finish_lat finish_long status driver_id)a
+  @required_fields ~w(start_lat start_long finish_lat finish_long status)a
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, @fields)
     |> validate_required(@required_fields)
     |> validate_inclusion(:status, @statuses)
-    |> validate_inclusion(:start_lat, less_than_or_equal_to: 90.0, greater_than_or_equal_to: -90.0)
-    |> validate_inclusion(:start_long,
+    |> validate_number(:start_lat, less_than_or_equal_to: 90.0, greater_than_or_equal_to: -90.0)
+    |> validate_number(:start_long,
       less_than_or_equal_to: 180.0,
       greater_than_or_equal_to: -180.0
     )
-    |> validate_inclusion(:finish_lat,
+    |> validate_number(:finish_lat,
       less_than_or_equal_to: 90.0,
       greater_than_or_equal_to: -90.0
     )
-    |> validate_inclusion(:finish_long,
+    |> validate_number(:finish_long,
       less_than_or_equal_to: 180.0,
       greater_than_or_equal_to: -180.0
     )

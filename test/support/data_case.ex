@@ -24,6 +24,8 @@ defmodule HappyTrucker.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import HappyTrucker.DataCase
+      import HappyTrucker.Factory
+      import HappyTrucker.TestHelper
     end
   end
 

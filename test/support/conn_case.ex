@@ -23,6 +23,8 @@ defmodule HappyTruckerWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import HappyTruckerWeb.ConnCase
+      import HappyTrucker.Factory
+
 
       alias HappyTruckerWeb.Router.Helpers, as: Routes
 
