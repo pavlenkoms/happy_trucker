@@ -1,4 +1,4 @@
-defmodule HappyTruckerWeb.FreightView do
+defmodule HappyTruckerWeb.API.FreightView do
   use HappyTruckerWeb, :view
 
   def render("index.json", %{freights: freights}) do
@@ -9,12 +9,21 @@ defmodule HappyTruckerWeb.FreightView do
 
   def render("show.json", %{freight: freight}) do
     %{
-      freights: freight(freight)
+      freight: freight(freight)
     }
   end
 
   defp freight(freight) do
     freight
-    |> Map.take([:id, :start_lat, :start_long, :finish_lat, :finish_long, :driver_id])
+    |> Map.take([
+      :id,
+      :start_lat,
+      :start_long,
+      :finish_lat,
+      :finish_long,
+      :driver_id,
+      :distance,
+      :status
+    ])
   end
 end

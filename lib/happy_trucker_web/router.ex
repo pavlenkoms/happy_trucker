@@ -17,7 +17,7 @@ defmodule HappyTruckerWeb.Router do
   scope "/api", HappyTruckerWeb.API do
     pipe_through :api
 
-    resources("/freights", FreightController, only: [:create, :index, :update])
+    resources("/freights", FreightController, only: [:create, :index, :update, :show])
   end
 
   # Other scopes may use custom stacks.
