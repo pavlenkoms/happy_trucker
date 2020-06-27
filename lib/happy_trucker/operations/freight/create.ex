@@ -4,8 +4,10 @@ defmodule HappyTrucker.Freight.Create do
   use Params,
     params: %{
       freight!: %{
-        lat!: :float,
-        long!: :float
+        start_lat!: :float,
+        start_long!: :float,
+        finish_lat!: :float,
+        finish_long!: :float
       }
     }
 
